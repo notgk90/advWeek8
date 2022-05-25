@@ -28,18 +28,17 @@ class TodoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this).get(ListTodoViewModel::class.java)
+        viewModel.refresh()
+        recViewTodo.layoutManager = LinearLayoutManager(context)
+        recViewTodo.adapter = todoListAdapter
+
         fabAddTodo.setOnClickListener {
             val action = TodoListFragmentDirections.actionCreateTodo()
             Navigation.findNavController(it).navigate(action)
         }
 
         observeViewModel()
-
-
-        viewModel = ViewModelProvider(this).get(ListTodoViewModel::class.java)
-        viewModel.refresh()
-        recViewTodo.layoutManager = LinearLayoutManager(context)
-        recViewTodo.adapter = todoListAdapter
     }
 
     fun observeViewModel() {
